@@ -23,14 +23,14 @@
 
 <div class="card">
   <h3>🧪 Тест: Базовые знания о полимерах</h3>
-  <p>Это часть проекта Case‑In. Результаты нужны для распределения источников 4–10 между командой.</p>
+  <p>Если не пройдешь, я приду к тебе домой и выебу в жопу.</p>
 
   <!-- Блок входа -->
   <div id="login-block">
     <p><strong>Авторизуйтесь для прохождения теста:</strong></p>
-    <label for="userLogin">Ваш логин (выдал координатор):</label>
-    <input type="text" id="userLogin" placeholder="например, adilya2026">
-    <div id="loginError" class="error-msg">❌ Такого логина нет. Спроси у координатора правильный логин.</div>
+    <label for="userLogin">Ваш логин (который выдал легендарнейший Китик):</label>
+    <input type="text" id="userLogin" placeholder="например, Dick">
+    <div id="loginError" class="error-msg">Ты - ебень, даже логин нормально ввести не можешь!</div>
     <button onclick="startQuiz()">Войти и начать тест</button>
   </div>
 
@@ -148,7 +148,7 @@
     const resultBox = document.getElementById('result-box');
     // Получаем понятное имя
     const displayName = loginToName[currentUser] || currentUser;
-    const msgPrefix = `👤 Участник: ${displayName} | ✅ Результат: ${score} из 7\n`;
+    const msgPrefix = `👤 Участник: ${displayName} | Результат: ${score} из 7\n`;
     
     console.log(`[CASE-IN ADMIN] ${displayName}: ${score}/7`);
 
@@ -156,13 +156,13 @@
 
     if (score === 7) {
       resultBox.className = 'success';
-      resultBox.textContent = msgPrefix + '🎉 Отлично! Ты знаешь базу. Можешь помочь другим с теорией.';
+      resultBox.textContent = msgPrefix + 'Списал, уебище. Знаю же, что списал.';
     } else if (score >= 4) {
       resultBox.className = 'warning';
-      resultBox.textContent = msgPrefix + '✅ Хорошо, но есть пробелы. Посмотри конспект (polymers-notes.pdf).';
+      resultBox.textContent = msgPrefix + 'Долбоёб, ты нихуя не знаешь про полимеры.';
     } else {
       resultBox.className = 'danger';
-      resultBox.textContent = msgPrefix + '⚠️ База слабая. Обязательно открой polymers-notes.pdf. Адиля поможет с химией, Ден — с физикой, Лиза — с логикой.';
+      resultBox.textContent = msgPrefix + 'УЕБИЩЕ, КАК ТЫ СМОГ НА ВСЕ ВОПРОСЫ ОТВЕТИТЬ НЕПРАВИЛЬНО? Ну долбоёб...';
     }
     resultBox.style.display = 'block';
   }
