@@ -182,10 +182,10 @@
       return;
     }
 
-    // Формируем красивый текст
     let text = '=== СТАТИСТИКА ТЕСТА (Case-In) ===\n';
+    text += 'Дата/время | Имя участника | Логин | Баллы\n';
     results.forEach(r => {
-      text += `${r.time} | ${r.user} | ${r.score}/7\n`;
+      text += `${r.time} | ${r.name} | ${r.user} | ${r.score}/7\n`;
     });
 
     // Копируем в буфер
