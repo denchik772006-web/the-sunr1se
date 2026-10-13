@@ -110,6 +110,7 @@
   function startQuiz() {
     const loginInput = document.getElementById('userLogin');
     const errorMsg = document.getElementById('loginError');
+    errorMsg.style.display = 'none';
     currentUser = loginInput.value.trim().toLowerCase();
     
     if (!allowedLogins.includes(currentUser)) {
