@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Тест: Полимеры (Case-In)</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 700px; margin: 2rem auto; padding: 0 1rem; color: #333; }
+    .card { background: #f8f9fa; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    h3 { color: #2c3e50; border-bottom: 2px solid #0056b3; padding-bottom: 10px; }
+    label { display: block; margin: 0.5rem 0; cursor: pointer; }
+    input[type="radio"] { margin-right: 8px; }
+    input[type="text"] { padding: 10px; width: 100%; max-width: 300px; border: 1px solid #ccc; border-radius: 4px; }
+    button { background: #0056b3; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: bold; margin-top: 15px; }
+    button:hover { background: #004494; }
+    #result-box { margin-top: 20px; padding: 15px; border-radius: 6px; display: none; }
+    .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+    .danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    .error-msg { color: #dc3545; font-weight: bold; margin-top: 5px; display: none; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h3>🧪 Тест: Базовые знания о полимерах</h3>
+  <p>Это часть проекта Case‑In. Результаты нужны для распределения источников 4–10.</p>
+
+  <!-- Блок входа -->
+  <div id="login-block">
+    <p><strong>Авторизуйтесь для прохождения теста:</strong></p>
+    <label for="userLogin">Ваш логин (выдал координатор):</label>
+    <input type="text" id="userLogin" placeholder="например, adilya2026">
+    <div id="loginError" class="error-msg">❌ Такого логина нет. Спроси у координатора правильный логин.</div>
+    <button onclick="startQuiz()">Войти и начать тест</button>
+  </div>
+
+  <!-- Блок теста -->
+  <form id="quiz-form" style="display: none;">
+    <div>
+      <p><strong>1. Что такое полимер?</strong></p>
+      <label><input type="radio" name="q1" value="a"> Молекула из множества повторяющихся звеньев (мономеров)</label>
+      <label><input type="radio" name="q1" value="b"> Вещество, которое не растворяется ни в одном растворителе</label>
+      <label><input type="radio" name="q1" value="c"> Смесь разных веществ</label>
+    </div>
+    <div>
+      <p><strong>2. Что называют мономером?</strong></p>
+      <label><input type="radio" name="q2" value="a"> Конечный продукт реакции</label>
+      <label><input type="radio" name="q2" value="b"> Исходное вещество, из которого строится полимер</label>
+      <label><input type="radio" name="q2" value="c"> Побочный продукт производства</label>
+    </div>
+    <div>
+      <p><strong>3. Полиэтилен получают по реакции:</strong></p>
+      <label><input type="radio" name="q3" value="a"> Поликонденсации</label>
+      <label><input type="radio" name="q3" value="b"> Нейтрализации</label>
+      <label><input type="radio" name="q3" value="c"> Полимеризации (присоединения)</label>
+    </div>
+    <div>
+      <p><strong>4. Пример природного полимера:</strong></p>
+      <label><input type="radio" name="q4" value="a"> Полипропилен</label>
+      <label><input type="radio" name="q4" value="b"> Целлюлоза</label>
+      <label><input type="radio" name="q4" value="c"> Полиэстер</label>
+    </div>
+    <div>
+      <p><strong>5. Термопластичные полимеры:</strong></p>
+      <label><input type="radio" name="q5" value="a"> Разлагаются при нагреве</label>
+      <label><input type="radio" name="q5" value="b"> Размягчаются при нагреве, твердеют при охлаждении</label>
+      <label><input type="radio" name="q5" value="c"> Не меняют свойств</label>
+    </div>
+    <div>
+      <p><strong>6. ПВХ — это:</strong></p>
+      <label><input type="radio" name="q6" value="a"> Поливиниловый спирт</label>
+      <label><input type="radio" name="q6" value="b"> Поливинилхлорид</label>
+      <label><input type="radio" name="q6" value="c"> Поливинилацетат</label>
+    </div>
+    <div>
+      <p><strong>7. Почему полимеры используют в изоляции проводов?</strong></p>
+      <label><input type="radio" name="q7" value="a"> Хорошо проводят ток</label>
+      <label><input type="radio" name="q7" value="b"> Плохо проводят ток (диэлектрики) и гибкие</label>
+      <label><input type="radio" name="q7" value="c"> Тяжёлые и защищают от ударов</label>
+    </div>
+    
+    <button type="button" onclick="checkQuiz()" style="width: 100%">Проверить ответы</button>
+    <br><br>
+    <button type="button" onclick="exportStats()" style="background: #28a745; width: 100%">💾 Выгрузить статистику (скопировать в буфер)</button>
+    
+    <div id="result-box"></div>
+  </form>
+</div>
+
+<script>
+  // СПИСОК РАЗРЕШЁННЫХ ЛОГИНОВ
+  const allowedLogins = [
+    'adilya2026',
+    'denis_phys',
+    'genka_logic',
+    'admin_coord'
+  ];
+
+  let currentUser = null;
+  const STORAGE_KEY = 'casein_quiz_results';
+
+  function startQuiz() {
+    const loginInput = document.getElementById('userLogin');
+    const errorMsg = document.getElementById('loginError');
+    currentUser = loginInput.value.trim().toLowerCase();
+    
+    if (!allowedLogins.includes(currentUser)) {
+      errorMsg.style.display = 'block';
+      return;
+    }
+
+    errorMsg.style.display = 'none';
+    document.getElementById('login-block').style.display = 'none';
+    document.getElementById('quiz-form').style.display = 'block';
+  }
+
+  // Ответы лежат прямо здесь — если кто догадается, молодец
+  function getCorrectAnswers() {
+    return {
+      q1: 'a',
+      q2: 'b',
+      q3: 'c',
+      q4: 'b',
+      q5: 'b',
+      q6: 'b',
+      q7: 'b'
+    };
+  }
+
+  function checkQuiz() {
+    const answers = getCorrectAnswers();
+    let score = 0;
+
+    for (const q in answers) {
+      const selected = document.querySelector(`input[name="${q}"]:checked`);
+      if (selected && selected.value === answers[q]) {
+        score++;
+      }
+    }
+
+    const resultBox = document.getElementById('result-box');
+    const msgPrefix = `👤 Пользователь: ${currentUser} | ✅ Результат: ${score} из 7\n`;
+    
+    // Логируем в консоль (твоя «админка»)
+    console.log(`[CASE-IN ADMIN] ${currentUser}: ${score}/7`);
+
+    // Сохраняем в localStorage (чтобы не пропали)
+    saveResult(currentUser, score);
+
+    if (score === 7) {
+      resultBox.className = 'success';
+      resultBox.textContent = msgPrefix + '🎉 Отлично! Ты знаешь базу. Можешь помочь другим с теорией.';
+    } else if (score >= 4) {
+      resultBox.className = 'warning';
+      resultBox.textContent = msgPrefix + '✅ Хорошо, но есть пробелы. Посмотри конспект (polymers-notes.pdf).';
+    } else {
+      resultBox.className = 'danger';
+      resultBox.textContent = msgPrefix + '⚠️ База слабая. Обязательно открой polymers-notes.pdf. Адиля поможет с химией, Денис — с физикой.';
+    }
+    resultBox.style.display = 'block';
+  }
+
+  function saveResult(user, score) {
+    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    existing.push({ user, score, time: new Date().toISOString() });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+  }
+
+  function exportStats() {
+    const results = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    if (results.length === 0) {
+      alert('Пока нет результатов для выгрузки.');
+      return;
+    }
+
+    // Формируем красивый текст
+    let text = '=== СТАТИСТИКА ТЕСТА (Case-In) ===\n';
+    results.forEach(r => {
+      text += `${r.time} | ${r.user} | ${r.score}/7\n`;
+    });
+
+    // Копируем в буфер
+    navigator.clipboard.writeText(text).then(() => {
+      alert('Статистика скопирована в буфер! Теперь вставь её в Google Таблицу / Word / блокнот.');
+    }).catch(err => {
+      alert('Не удалось скопировать в буфер (старый браузер). Просто скопируй из консоли.');
+    });
+  }
+</script>
+
+</body>
+</html>
