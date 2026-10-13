@@ -22,15 +22,15 @@
 <body>
 
 <div class="card">
-  <h3>🧪 Тест: Базовые знания о полимерах</h3>
-  <p>Это часть проекта Case‑In. Результаты нужны для распределения источников 4–10.</p>
+  <h3>Тест: Базовые знания о полимерах</h3>
+  <p>Если не сделаете, то вы конченое уёбище</p>
 
   <!-- Блок входа -->
   <div id="login-block">
     <p><strong>Авторизуйтесь для прохождения теста:</strong></p>
     <label for="userLogin">Ваш логин (выдал координатор):</label>
     <input type="text" id="userLogin" placeholder="например, adilya2026">
-    <div id="loginError" class="error-msg">❌ Такого логина нет. Спроси у координатора правильный логин.</div>
+    <div id="loginError" class="error-msg">Ты - ебень, даже логин правильлно ввести не можешь</div>
     <button onclick="startQuiz()">Войти и начать тест</button>
   </div>
 
@@ -88,23 +88,22 @@
 </div>
 
 <script>
-  
+  // СПИСОК РАЗРЕШЁННЫХ ЛОГИНОВ (нужны для проверки)
   const allowedLogins = [
-    'frendzona_s_himiey',
-    'kitik_dinchik',
-    'vryednaya_liza',
-    'testoviy',
-    'the_admin'
+    'adilya2026',
+    'denis_phys',
+    'liza_smart',
+    'admin_coord'
   ];
 
+  // Соответствие логинов и имён (для понятных результатов)
   const loginToName = {
-    'frendzona_s_himiey': 'Адиля',
-    'kitik_dinchik': 'Ден',
-    'vryednaya_liza': 'Лиза',
-    'testoviy': 'Тестовый бро'
-    'the_admin': 'Ты (координатор)'
+    'adilya2026': 'Адиля',
+    'denis_phys': 'Ден',
+    'liza_smart': 'Лиза',
+    'admin_coord': 'Ты (координатор)'
   };
-  
+
   let currentUser = null;
   const STORAGE_KEY = 'casein_quiz_results';
 
@@ -147,31 +146,30 @@
     }
 
     const resultBox = document.getElementById('result-box');
+    // Получаем понятное имя
     const displayName = loginToName[currentUser] || currentUser;
     const msgPrefix = `👤 Участник: ${displayName} | Результат: ${score} из 7\n`;
     
-    // Логируем в консоль (твоя «админка»)
-    console.log(`[CASE-IN ADMIN] ${currentUser}: ${score}/7`);
+    console.log(`[CASE-IN ADMIN] ${displayName}: ${score}/7`);
 
-    // Сохраняем в localStorage (чтобы не пропали)
-    saveResult(currentUser, score);
+    saveResult(currentUser, score, displayName);
 
     if (score === 7) {
       resultBox.className = 'success';
       resultBox.textContent = msgPrefix + 'Списал, уебище. Знаю же, что списал';
-    } else if (score >= 2) {
+    } else if (score >= 4) {
       resultBox.className = 'warning';
-      resultBox.textContent = msgPrefix + 'Уебище, ты нихуя не знаешь про полимеры, ты чмо ебаное, хуй его знает, нахера я тебя в команду взял';
+      resultBox.textContent = msgPrefix + 'Долбоёб, ты нихуя не знаешь про полимеры';
     } else {
       resultBox.className = 'danger';
-      resultBox.textContent = msgPrefix + 'Ты блять конченый, как ты на всё ответил неправильно нахуй? Ну долбоёб...';
+      resultBox.textContent = msgPrefix + 'УЁБИЩЕ БЛЯТЬ, ТЫ КАК НА ВСЕ ВОПРОСЫ ОТВЕТИЛ НЕПРАВМЛЬНО? Ну долбоёб...';
     }
     resultBox.style.display = 'block';
   }
 
-  function saveResult(user, score) {
+  function saveResult(user, score, name) {
     const existing = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    existing.push({ user, score, time: new Date().toISOString() });
+    existing.push({ user, score, name, time: new Date().toISOString() });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
   }
 
@@ -188,7 +186,6 @@
       text += `${r.time} | ${r.name} | ${r.user} | ${r.score}/7\n`;
     });
 
-    // Копируем в буфер
     navigator.clipboard.writeText(text).then(() => {
       alert('Статистика скопирована в буфер! Теперь вставь её в Google Таблицу / Word / блокнот.');
     }).catch(err => {
