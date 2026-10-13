@@ -147,7 +147,8 @@
     }
 
     const resultBox = document.getElementById('result-box');
-    const msgPrefix = `👤 Пользователь: ${currentUser} |  Результат: ${score} из 7\n`;
+    const displayName = loginToName[currentUser] || currentUser;
+    const msgPrefix = `👤 Участник: ${displayName} | Результат: ${score} из 7\n`;
     
     // Логируем в консоль (твоя «админка»)
     console.log(`[CASE-IN ADMIN] ${currentUser}: ${score}/7`);
