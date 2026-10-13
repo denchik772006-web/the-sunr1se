@@ -115,7 +115,6 @@
     document.getElementById('quiz-form').style.display = 'block';
   }
 
-  // Ответы лежат прямо здесь — если кто догадается, молодец
   function getCorrectAnswers() {
     return {
       q1: 'a',
@@ -140,7 +139,7 @@
     }
 
     const resultBox = document.getElementById('result-box');
-    const msgPrefix = `👤 Пользователь: ${currentUser} | ✅ Результат: ${score} из 7\n`;
+    const msgPrefix = `👤 Пользователь: ${currentUser} |  Результат: ${score} из 7\n`;
     
     // Логируем в консоль (твоя «админка»)
     console.log(`[CASE-IN ADMIN] ${currentUser}: ${score}/7`);
@@ -150,13 +149,13 @@
 
     if (score === 7) {
       resultBox.className = 'success';
-      resultBox.textContent = msgPrefix + '🎉 Отлично! Ты знаешь базу. Можешь помочь другим с теорией.';
-    } else if (score >= 4) {
+      resultBox.textContent = msgPrefix + 'Списал, уебище. Знаю же, что списал';
+    } else if (score >= 2) {
       resultBox.className = 'warning';
-      resultBox.textContent = msgPrefix + '✅ Хорошо, но есть пробелы. Посмотри конспект (polymers-notes.pdf).';
+      resultBox.textContent = msgPrefix + 'Уебище, ты нихуя не знаешь про полимеры, ты чмо ебаное, хуй его знает, нахера я тебя в команду взял';
     } else {
       resultBox.className = 'danger';
-      resultBox.textContent = msgPrefix + '⚠️ База слабая. Обязательно открой polymers-notes.pdf. Адиля поможет с химией, Денис — с физикой.';
+      resultBox.textContent = msgPrefix + 'Ты блять конченый, как ты на всё ответил неправильно нахуй? Ну долбоёб...';
     }
     resultBox.style.display = 'block';
   }
