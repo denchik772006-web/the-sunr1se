@@ -31,12 +31,12 @@
   <div id="login-block">
     <p><strong>Авторизуйтесь для прохождения теста:</strong></p>
     <label for="userLogin">Ваш логин (который выдал легендарнейший Китик):</label>
-    <input type="text" id="userLogin" placeholder="например, dick">
+    <input type="text" id="userLogin" placeholder="например, dick" onekeydown="handleEnter(event)">
     <div id="loginError" class="error-msg">Ты - ебень, даже логин нормально ввести не можешь!</div>
     <button onclick="startQuiz()">Войти и начать тест</button>
   </div>
 
-  <!-- Блок теста -->
+  <!-- Блок теста -->Trus
   <form id="quiz-form" style="display: none;">
     <div>
       <p><strong>1. Что такое полимер?</strong></p>
@@ -114,6 +114,12 @@
 
   let currentUser = null;
   const STORAGE_KEY = 'casein_quiz_results';
+
+  function handleEnter(e) {
+    if (e.key === 'Enter') {
+      startQuiz();
+    }
+  }
 
   function startQuiz() {
     const loginInput = document.getElementById('userLogin');
